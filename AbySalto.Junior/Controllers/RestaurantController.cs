@@ -18,12 +18,22 @@ namespace AbySalto.Junior.Controllers
         }
 
        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders(string? sort = null, CancellationToken cancellationToken = default)
         {
-            var orders = await _dbContext.Orders
+            var baseQuery = _dbContext.Orders
                 .AsNoTracking()
-                .Include(o => o.Items)
-                .ToListAsync(cancellationToken);
+                .Include(o => o.Items);
+
+
+            
+            var orderedQuery = sort?.ToLower() switch
+            {
+                "amount_asc" => baseQuery.OrderBy(o => o.TotalAmount),
+                "amount_desc" => baseQuery.OrderByDescending(o => o.TotalAmount),
+                _ => baseQuery.OrderByDescending(o => o.OrderDate)
+            };
+
+            var orders = await orderedQuery.ToListAsync(cancellationToken);
 
             return Ok(orders);
         }
