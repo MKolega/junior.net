@@ -22,6 +22,7 @@ namespace AbySalto.Junior.Controllers
         {
             var orders = await _dbContext.Orders
                 .AsNoTracking()
+                .Include(o => o.Items)
                 .ToListAsync(cancellationToken);
 
             return Ok(orders);
@@ -32,6 +33,7 @@ namespace AbySalto.Junior.Controllers
         {
             var order = await _dbContext.Orders
                 .AsNoTracking()
+                .Include(o => o.Items)
                 .FirstOrDefaultAsync(order => order.Id == id, cancellationToken);
 
             if (order is null)
