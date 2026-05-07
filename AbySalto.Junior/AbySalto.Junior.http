@@ -4,3 +4,50 @@ GET {{AbySalto.Junior_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+GET {{AbySalto.Junior_HostAddress}}/api/Restaurant
+Accept: application/json
+
+###
+
+GET {{AbySalto.Junior_HostAddress}}/api/Restaurant/1
+Accept: application/json
+
+###
+# Update order status 
+PATCH {{AbySalto.Junior_HostAddress}}/api/Restaurant/1/status
+Content-Type: application/json
+Accept: application/json
+
+{
+	"status": 2
+}
+
+
+###
+
+POST {{AbySalto.Junior_HostAddress}}/api/Restaurant
+Content-Type: application/json
+Accept: application/json
+
+{
+	"customerName": "John Doe",
+	"paymentMethod": "Cash",
+	"address": "Main Street 1",
+	"phoneNumber": "+3850912223333",
+	"notes": "No onions, please.",
+	"currency": "USD",
+	"items": [
+		{
+			"name": "Burger",
+			"price": 10.00,
+			"quantity": 2
+		},
+		{
+			"name": "Fries",
+			"price": 5.00,
+			"quantity": 1
+		}
+	]
+}
+
+###
